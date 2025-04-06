@@ -556,7 +556,7 @@ This script reads all of the config from 'svbd.config' in current working direct
 	Make the V compiler verbose
 
 -o <directory>, --output <directory>
-	Which directory as build directory
+	Which directory to use as module binary output directory
 
 --lib-extension <extension>
 	Specify what file extension should be used for library binaries, default = platform's format (e.g .dll, .so). 
@@ -826,7 +826,7 @@ fn (log Logger) e(tag string, txt string) { log.write(.error, tag, txt) }
 fn (log Logger) w(tag string, txt string) { log.write(.warning, tag, txt) }
 fn (log Logger) i(tag string, txt string) { log.write(.info, tag, txt) }
 
-// This is a layer for panic, so use this only if there is any fatal error
+// This would calls error, so use this only if there is an irrecoverable error, stands for fatal kill ( totally not anything else :) )
 @[noreturn]
 fn (log Logger) fk(tag string, txt string) { log.write(.fatal, tag, txt); for {} }
 // #endregion Logging

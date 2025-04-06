@@ -1,20 +1,36 @@
-# SVBD - Simple V Build Drivers
+# svbd.v - Simple V Build Driver
 
-What it does is just drives the V build system, that's it. Well, maybe with one or two additional features. Entirely written in V.
+What it does is just drives the V build system for projects with multiple subproject, that's it. Well, maybe with one or two additional features. Entirely written in V.
 
 > I thought to use SQBD though, but that sounds cringe 😑
 
-## Usage
-### As Shell Script
-This script is a V Shell Script, just download the `svbd.v` file to somewhere in your devices' $PATH%PATH%, or put it somewhere in your project.
-If you are on Linux or Mac, you can just `chmod +x svbd.v` and execute the file from terminal. On Windows, you may need to call `v run svbd.v -- [arguments]`
+## Features
+- No additional dependency, Only uses V internal libraries.
+- Simple to integrate, only a single shell script, you can call it from everywhere unrestricted by your OS, you can compile it too binary too.
+- Fast and lightweight, this is V after all.
 
-### As Executable
-The script is also can be compiled to native binary using V, the rest of the steps is just the same like using it the shell script way. 
+### Tasks
+- Build one or multiple modules
+- Run a module
+- Clean build artifacts
+- List modules ( with diagnostics )
+
+## Usage
+This script works almost similarly as GNU Make, put a `svbd.config` file at your project root, specify all of the modules
+you want to drive using this script ( make sure each module have v.mod file ), and you're ready to go.
+
+### Installation
+This script is a V Shell Script, just download the `svbd.v` file to somewhere in your devices' `$PATH` / `%PATH%`, 
+or put it somewhere in your project ( embedding is allowed as long as the license notice in the file isn't changed ).
+
+If you are on Linux or Mac, you can just `chmod +x svbd.v` and execute the file from terminal as a shell script. 
+On Windows, you may need to call `v run svbd.v -- [arguments]`
+
+> The script is also can be compiled to native binary, it works basically the same as how you use it as a shell script
 
 ### Commands
 ```
-println(r"svbd - simple v build driver
+svbd - simple v build driver
 usage : svbd.v [OPTIONS] [module_name...]
 
 You can specify multiple modules to build
@@ -55,7 +71,7 @@ This script reads all of the config from 'svbd.config' in current working direct
 	Make the V compiler verbose
 
 -o <directory>, --output <directory>
-	Which directory as build directory
+	Which directory to use as module binary output directory
 
 --lib-extension <extension>
 	Specify what file extension should be used for library binaries, default = platform's format (e.g .dll, .so). 
@@ -68,11 +84,38 @@ This script reads all of the config from 'svbd.config' in current working direct
 	If empty string is specified, no extension would be added, only leaves the file name.
 ```
 
+### svbd.config File Structure
+This is Makefile equivalent for svbd.v, it contains all informations needed to drive your project from this script.
+
+The module entry format is:
+```
+[module_type]:[module_name] [| v_compile_flags...]
+```
+
+Possible module types:
+- Shared Libraries ( "l", "lib", "library", "shared", "dll", "so", "dylib" )
+- Executable ( "e", "exe", "executable" )
+
+Module names is limited to `[a-zA-Z0-9_]` to adhere with V module name standard
+
+V Compile flags is completely optional, you can use it to add library linkage, specify backend or maybe c compiler, etc. 
+But if you specify one, here is some flags you should not manually specify : `-o`, `-prod`, `-g`, `--os`, `-shared`.
+
+Blank lines or comment lines ( line starting with "#" ) is going to be ignored.
+
+#### Sample
+```
+# This is a comment
+lib:csvparser
+l:mysndlib    | -cc gcc -lsoundio
+e:mymainapp   | -lglfw -lglew
+```
+
 ## Building
-It is just a shell script, no need to build anything basically.
+It is just a shell script, no need to build anything basically. You just need the V toolchain, and that's all you need.
 
 ## Contibuting
 Any code improvement or feature addition is welcome.
 
 ## License
-MIT License unless explicitly stated otherwise, see [LICENSE](LICENSE)
+MIT License unless explicitly stated otherwise either in a subdirectory or on top of a file source code, see [LICENSE](LICENSE)
