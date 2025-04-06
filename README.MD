@@ -71,5 +71,8 @@ This script reads all of the config from 'svbd.config' in current working direct
 ## Building
 It is just a shell script, no need to build anything basically.
 
+## Contibuting
+Any code improvement or feature addition is welcome.
+
 ## License
 MIT License unless explicitly stated otherwise, see [LICENSE](LICENSE)
