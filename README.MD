@@ -24,7 +24,7 @@ This script is a V Shell Script, just download the `svbd.v` file to somewhere in
 or put it somewhere in your project ( embedding is allowed as long as the license notice in the file isn't changed ).
 
 If you are on Linux or Mac, you can just `chmod +x svbd.v` and execute the file from terminal as a shell script. 
-On Windows, you may need to call `v run svbd.v -- [arguments]`
+On Windows, you may need the additional `svbd.bat`.
 
 > The script is also can be compiled to native binary, it works basically the same as how you use it as a shell script
 
