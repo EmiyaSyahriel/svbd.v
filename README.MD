@@ -84,6 +84,27 @@ This script reads all of the config from 'svbd.config' in current working direct
 	If empty string is specified, no extension would be added, only leaves the file name.
 ```
 
+### Recommended Project Folder Structure
+```
+|_ project1/
+|  |_ v.mod
+|  |_ src/
+|  |  |_ source1.v
+|  |  |_ source2.v
+|  |  |_ ...
+|  |_ ...
+|_ project2/
+|  |_ v.mod
+|  |_ src/
+|  |  |_ source1.v
+|  |  |_ source2.v
+|  |  |_ ...
+|  |_ ...
+|_ ...
+|_ svbd.config
+|_ ...
+```
+
 ### svbd.config File Structure
 This is Makefile equivalent for svbd.v, it contains all informations needed to drive your project from this script.
 
